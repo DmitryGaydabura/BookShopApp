@@ -27,27 +27,27 @@ public class ViewByIDServlet extends HttpServlet {
             // Getting the id from the url and converting it to an integer.
             String sid = request.getParameter("id");
             int id = Integer.parseInt(sid);
-            List<Employee> listEmployees = new ArrayList<>();
+            List<CustomerOrder> listOrders = new ArrayList<>();
 
             try {
                 // Getting all the users from the database.
-                Connection connection = EmployeeRepository.getConnection();
-                PreparedStatement ps = connection.prepareStatement("select * from users");
+                Connection connection = OrdersRepository.getConnection();
+                PreparedStatement ps = connection.prepareStatement("select * from bookshopcustomers");
                 ResultSet rs = ps.executeQuery();
 
-                // Counting the number of employees in the database and checking if the ID is bigger than the number of
-                // employees.
-                countEmployees(listEmployees, rs);
-                isIDBiggerThenList(out, id, listEmployees);
+                // Counting the number of Orders in the database and checking if the ID is bigger than the number of
+                // Orders.
+                countOrders(listOrders, rs);
+                isIDBiggerThenList(out, id, listOrders);
 
             } catch (SQLException e) {
 
                 out.println("Something terrible happened");
 
             } finally {
-                // Getting the employee by the ID and printing it out.
-                Employee employee = EmployeeRepository.getEmployeeById(id);
-                out.print(employee);
+                // Getting the Orders by the ID and printing it out.
+                CustomerOrder customerOrder = OrdersRepository.getOrderById(id);
+                out.print(customerOrder);
                 out.close();
             }
         } catch (IOException e) {
@@ -55,17 +55,17 @@ public class ViewByIDServlet extends HttpServlet {
         }
     }
 
-    private void isIDBiggerThenList(PrintWriter out, int id, List<Employee> listEmployees) {
-        if (id > listEmployees.size()) {
+    private void isIDBiggerThenList(PrintWriter out, int id, List<CustomerOrder> listOrders) {
+        if (id > listOrders.size()) {
             out.println("There is no such ID in database");
         }
     }
 
-    private void countEmployees(List<Employee> listEmployees, ResultSet rs) throws SQLException {
-        // Counting the number of employees in the database.
+    private void countOrders(List<CustomerOrder> listOrders, ResultSet rs) throws SQLException {
+        // Counting the number of Orders in the database.
         while (rs.next()) {
-            Employee employee = new Employee();
-            listEmployees.add(employee);
+            CustomerOrder customerOrder = new CustomerOrder();
+            listOrders.add(customerOrder);
         }
     }
 }

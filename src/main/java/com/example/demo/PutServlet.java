@@ -24,17 +24,21 @@ public class PutServlet extends HttpServlet {
 
         // Getting the name and email from the request.
         String name = request.getParameter("name");
-        String email = request.getParameter("email");
+        String book = request.getParameter("book");
+        String date = request.getParameter("date");
+        String address = request.getParameter("address");
 
-        // Creating a new Employee object and setting the values of the employee object.
-        Employee employee = new Employee();
-        employee.setId(id);
-        employee.setName(name);
-        employee.setEmail(email);
-        employee.setCountry(request.getParameter("country"));
+        // Creating a new Orders object and setting the values of the Orders object.
+        CustomerOrder customerOrder = new CustomerOrder();
+        customerOrder.setId(id);
+        customerOrder.setName(name);
+        customerOrder.setBook(book);
+        customerOrder.setDate(date);
+        customerOrder.setAddress(address);
 
-        // Calling the update method in the EmployeeRepository class.
-        int status = EmployeeRepository.update(employee);
+
+        // Calling the update method in the OrdersRepository class.
+        int status = OrdersRepository.update(customerOrder);
 
         // This is a try-catch block. If the status is greater than 0, then the user is redirected to the viewServlet. If
         // the status is not greater than 0, then an IOException is thrown. If an IOException is thrown, then the user is

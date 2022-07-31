@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static java.lang.System.out;
-
 @WebServlet("/deleteServlet")
 public class DeleteServlet extends HttpServlet {
 
@@ -19,9 +17,9 @@ public class DeleteServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         int id = Integer.parseInt(sid);
-        EmployeeRepository.delete(id);
+        OrdersRepository.delete(id);
 
-        out.println("User with ID " + id + " was deleted.");
+        out.println("Order with ID " + id + " was deleted.");
 //        response.sendRedirect("viewServlet");
 
     }

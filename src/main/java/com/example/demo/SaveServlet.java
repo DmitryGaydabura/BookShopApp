@@ -23,36 +23,41 @@ public class SaveServlet extends HttpServlet {
 
         // Getting the parameters from the form.
         String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String country = request.getParameter("country");
+        String book = request.getParameter("book");
+        String date = request.getParameter("date");
+        String address = request.getParameter("address");
 
-        Employee employee = new Employee();
 
-        // Setting the values of the employee object.
-        myEmployee(name, email, country, employee);
+        CustomerOrder customerOrder = new CustomerOrder();
+
+        // Setting the values of the Orders object.
+        myOrder(name, book, date, address, customerOrder);
 
         boolean nameIsNull = false;
-        boolean emailIsNull = false;
-        boolean countryIsNull = false;
+        boolean bookIsNull = false;
+        boolean dateIsNull = false;
+        boolean addressIsNull = false;
 
         // Checking if the name, email, and country are null.
         nameIsNull = isNull(name, nameIsNull);
-        emailIsNull = isNull(email, emailIsNull);
-        countryIsNull = isNull(country, countryIsNull);
+        bookIsNull = isNull(book, bookIsNull);
+        dateIsNull = isNull(date, dateIsNull);
+        addressIsNull = isNull(address, addressIsNull);
 
-        //out.println(employee.toString());
-        //out.println(EmployeeRepository.getConnection());
+        //out.println(customerOrder.toString());
+        //out.println(OrdersRepository.getConnection());
 
-        // Saving the employee object to the database.
-        int status = EmployeeRepository.save(employee);
+        // Saving the Orders object to the database.
+        int status = OrdersRepository.save(customerOrder);
         //out.println(status);
 
         if (status > 0) {
             // Printing out the status of the save to the database.
             out.println("Record saved successfully!");
             out.println("Name is null: " + nameIsNull + "(" + name + ")");
-            out.println("Email is null: " + emailIsNull+ "(" + email + ")");
-            out.println("Country is null: " + countryIsNull+ "(" + country + ")");
+            out.println("Book is null: " + bookIsNull + "(" + book + ")");
+            out.println("Date is null: " + dateIsNull + "(" + date + ")");
+            out.println("Address is null: " + addressIsNull + "(" + address + ")");
         } else {
             out.println("Sorry! unable to save record");
         }
@@ -61,16 +66,18 @@ public class SaveServlet extends HttpServlet {
 
     private boolean isNull(String name, boolean nameIsNull) {
         // Checking if the name is null.
-        if(name == null){
+        if (name == null) {
             nameIsNull = true;
         }
         return nameIsNull;
     }
 
-    private void myEmployee(String name, String email, String country, Employee employee) {
-        // Setting the values of the employee object.
-        employee.setName(name);
-        employee.setEmail(email);
-        employee.setCountry(country);
+    private void myOrder(String name, String book, String date, String address, CustomerOrder customerOrder) {
+        // Setting the values of the Orders object.
+        customerOrder.setName(name);
+        customerOrder.setBook(book);
+        customerOrder.setDate(date);
+        customerOrder.setAddress(address);
+
     }
 }

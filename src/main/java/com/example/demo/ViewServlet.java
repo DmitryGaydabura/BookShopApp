@@ -17,10 +17,10 @@ public class ViewServlet extends HttpServlet {
         // Setting the content type to html and getting the writer to write to the response.
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        List<Employee> list = EmployeeRepository.getAllEmployees();
+        List<CustomerOrder> list = OrdersRepository.getAllOrders();
 
-        // Printing all the employees in the list.
-        printAllEmployees(out, list);
+        // Printing all the Orders in the list.
+        printAllOrders(out, list);
 
         // Checking if the list is empty and if it is, it throws an IOException.
         try {
@@ -28,16 +28,16 @@ public class ViewServlet extends HttpServlet {
                 throw new IOException();
             }
         }catch (IOException e ){
-            out.println("There were no employees found.");
+            out.println("There were no orders found.");
         }finally {
             out.close();
         }
 
     }
 
-    private void printAllEmployees(PrintWriter out, List<Employee> list) {
-        for (Employee employee : list) {
-            out.println(employee);
+    private void printAllOrders(PrintWriter out, List<CustomerOrder> list) {
+        for (CustomerOrder order : list) {
+            out.println(order);
         }
     }
 }
