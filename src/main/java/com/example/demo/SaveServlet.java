@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,9 +13,12 @@ import java.io.PrintWriter;
 
 @WebServlet("/saveServlet")
 public class SaveServlet extends HttpServlet {
-
+    Logger logger = LoggerFactory.getLogger(SaveServlet.class);
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+
 
         // Setting the content type and character encoding of the response.
         response.setContentType("text/plain");
@@ -54,10 +60,11 @@ public class SaveServlet extends HttpServlet {
         if (status > 0) {
             // Printing out the status of the save to the database.
             out.println("Record saved successfully!");
-            out.println("Name is null: " + nameIsNull + "(" + name + ")");
-            out.println("Book is null: " + bookIsNull + "(" + book + ")");
-            out.println("Date is null: " + dateIsNull + "(" + date + ")");
-            out.println("Address is null: " + addressIsNull + "(" + address + ")");
+            logger.info("Record saved successfully!");
+            logger.info("Name is null: " + nameIsNull + "(" + name + ")");
+            logger.info("Book is null: " + bookIsNull + "(" + book + ")");
+            logger.info("Date is null: " + dateIsNull + "(" + date + ")");
+            logger.info("Address is null: " + addressIsNull + "(" + address + ")");
         } else {
             out.println("Sorry! unable to save record");
         }

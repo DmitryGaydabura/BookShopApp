@@ -1,6 +1,8 @@
 package com.example.demo;
 
-import javax.servlet.ServletException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,9 +12,10 @@ import java.io.PrintWriter;
 
 @WebServlet("/putServlet")
 public class PutServlet extends HttpServlet {
-
+    Logger logger = LoggerFactory.getLogger(PutServlet.class);
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws  IOException {
+
 
         // Setting the content type of the response to text/html and getting the writer object to write the response.
         response.setContentType("text/html");
@@ -51,6 +54,7 @@ public class PutServlet extends HttpServlet {
             }
         } catch (IOException e) {
             out.println("Sorry! unable to update record");
+            logger.info("Unable to update the record.");
         } finally {
             out.close();
         }
