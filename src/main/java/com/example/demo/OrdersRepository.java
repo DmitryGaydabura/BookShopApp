@@ -1,22 +1,26 @@
 package com.example.demo;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 public class OrdersRepository {
 
-//    public static void main(String[] args) {
-//        getConnection();
-//
-//        CustomerOrder customerOrder = new CustomerOrder();
-//
-//        customerOrder.setName("oleg");
-//        customerOrder.setBook(" ");
-//        customerOrder.setDate(" ");
-//        customerOrder.setAddress(" ");
-//        save(customerOrder);
-//    }
+    public static void main(String[] args) {
+        getConnection();
+
+        CustomerOrder customerOrder = new CustomerOrder();
+
+        customerOrder.setName("oleg");
+        customerOrder.setBook(" ");
+        customerOrder.setDate(" ");
+        customerOrder.setAddress(" ");
+        customerOrder.setDelivered(true);
+        customerOrder.setId(16);
+        update(customerOrder);
+    }
 
     public static Connection getConnection() {
 
@@ -42,11 +46,13 @@ public class OrdersRepository {
         int status = 0;
         try {
             Connection connection = OrdersRepository.getConnection();
-            PreparedStatement ps = connection.prepareStatement("insert into bookshopcustomers(name,book,date,address) values (?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("insert into bookshopcustomers(name,book,date,address,isdelivered,isukrainian) values (?,?,?,?,?,?)");
             ps.setString(1, customerOrder.getName());
             ps.setString(2, customerOrder.getBook());
             ps.setString(3, customerOrder.getDate());
             ps.setString(4, customerOrder.getAddress());
+            ps.setBoolean(5, customerOrder.isDelivered());
+            ps.setBoolean(6, customerOrder.isUkrainian());
 
             status = ps.executeUpdate();
             connection.close();
@@ -63,12 +69,13 @@ public class OrdersRepository {
 
         try {
             Connection connection = OrdersRepository.getConnection();
-            PreparedStatement ps = connection.prepareStatement("update bookshopcustomers set name=?,book=?,date=?,address=? where id=?");
+            PreparedStatement ps = connection.prepareStatement("update bookshopcustomers set name=?,book=?,date=?,address=?,isdelivered = ? where id=?");
             ps.setString(1, customerOrder.getName());
             ps.setString(2, customerOrder.getBook());
             ps.setString(3, customerOrder.getDate());
             ps.setString(4, customerOrder.getAddress());
-            ps.setInt(5, customerOrder.getId());
+            ps.setBoolean(5, customerOrder.isDelivered());
+            ps.setInt(6, customerOrder.getId());
 
             status = ps.executeUpdate();
             connection.close();
@@ -78,7 +85,6 @@ public class OrdersRepository {
         }
         return status;
     }
-
     public static int delete(int id) {
 
         int status = 0;
@@ -112,6 +118,7 @@ public class OrdersRepository {
                 customerOrder.setBook(rs.getString(3));
                 customerOrder.setDate(rs.getString(4));
                 customerOrder.setAddress(rs.getString(5));
+                customerOrder.setDelivered(rs.getBoolean(6));
             }
             connection.close();
 
@@ -149,4 +156,5 @@ public class OrdersRepository {
         }
         return listOrders;
     }
+
 }

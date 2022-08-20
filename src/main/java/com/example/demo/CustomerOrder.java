@@ -23,5 +23,12 @@ public class CustomerOrder {
     @Setter
     @Getter
     private String address;
+    @Setter
+    @Getter
+    private boolean isDelivered;
+    @Setter
+    @Getter
+    private boolean isUkrainian;
+
 
 }
