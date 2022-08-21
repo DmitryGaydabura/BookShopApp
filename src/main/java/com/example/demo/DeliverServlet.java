@@ -14,20 +14,10 @@ import java.io.PrintWriter;
 public class DeliverServlet  extends HttpServlet {
 
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         String sid = request.getParameter("id");
         PrintWriter out = response.getWriter();
-
-        int id = Integer.parseInt(sid);
-        CustomerOrder customerOrder = OrdersRepository.getOrderById(id);
-        if(!customerOrder.isDelivered()){
-            customerOrder.setDelivered(true);
-            out.println("Order with ID " + id + " was delivered.");
-            log.info("Order with ID " + id + " was delivered.");
-            OrdersRepository.update(customerOrder);
-        }else{
-            out.println("Order with ID " + id + " was already delivered.");
-            log.info("Order with ID " + id + " was already delivered.");
-        }
+        OrdersRepository.deliver(sid, out);
     }
+
+
 }

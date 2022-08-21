@@ -2,6 +2,7 @@ package com.example.demo;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +102,20 @@ public class OrdersRepository {
             exception.printStackTrace();
         }
         return status;
+    }
+
+    public static void deliver(String sid, PrintWriter out) {
+        int id = Integer.parseInt(sid);
+        CustomerOrder customerOrder = OrdersRepository.getOrderById(id);
+        if(!customerOrder.isDelivered()){
+            customerOrder.setDelivered(true);
+            out.println("Order with ID " + id + " was delivered.");
+            log.info("Order with ID " + id + " was delivered.");
+            OrdersRepository.update(customerOrder);
+        }else{
+            out.println("Order with ID " + id + " was already delivered.");
+            log.info("Order with ID " + id + " was already delivered.");
+        }
     }
 
     public static CustomerOrder getOrderById(int id) {
